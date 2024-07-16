@@ -1,11 +1,10 @@
-import dealing.cards as cards
+import cards
 import quantumrandom
+import mersenne_random
 
 def new_deck():
     play_cards = cards.deck
     return play_cards
 
-def deal_cards(deck, num_cards): 
-    return deck.pop(quantumrandom.randint(1, ))
-
-print(quantumrandom.randint(0, 20)) 
+def deal_cards(deck):
+    return deck.pop("mersenne_random number working on ")
