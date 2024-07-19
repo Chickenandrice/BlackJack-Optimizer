@@ -1,4 +1,4 @@
- 
+
 deck = [
 ("2","Clubs"),
 ("2","Diamonds"),
