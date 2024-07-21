@@ -14,8 +14,15 @@ def sql_command(sql, db, val = None):
 class Hand: 
     def __init__(self):
         self.hand = []
+
     def draw_card(self, card): 
         self.hand.append(card) 
+
+    def final_hand(self):
+        return self.hand 
+    
+    def pair(self):
+        return len(self.hand) == 2 and self.hand[0][0] == self.hand[1][0]
 
         
 # holds the stats for a particular simulation 
@@ -39,9 +46,9 @@ class Player:
         sql_command(f'INSERT INTO {self.name} (balance, entry, WLP) VALUES (?, ?, ?)', db, (self.balance, "0", 'N/A')) 
         sqlite3.connect(db).close()
     
-    def split(): 
-        pass
-
+    def split(self): 
+        if self.hand[0].pair(): 
+            self.hand.append(self.hand[0].remove(self.hand[0][1]))
     def stand(): 
         pass
     def hit(self): 
