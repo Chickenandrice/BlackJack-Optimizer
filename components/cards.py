@@ -1,4 +1,11 @@
 
+def new_deck(num_decks):
+    play_cards = []
+    for card in deck: 
+        play_cards.append(card)
+
+    return play_cards*num_decks
+
 deck = [
 ("2","Clubs"),
 ("2","Diamonds"),
