@@ -14,6 +14,8 @@ Assumptions:
     
     player starting balance of $100,000
 
+    insurance bets are not counted or recorded
+
 
 
 Testing Strategies: 
