@@ -1,7 +1,6 @@
 import sqlite3
 import cards
-from dealer import Dealer
-from dealer import compare_hands
+from dealer import Dealer, compare_hands, sum_hand
 from hand import Hand
 import os
 #helper method for executing sql commmands
@@ -22,8 +21,9 @@ class Player:
         self.name = name 
         self.balance = balance 
         self.entry = 0
-        self.hands = [[]] 
-        self.wlp = "N/A" 
+        self.hands = [[]] # in the case where there are multiple hands due to split
+        self.win = 0
+        self.loss = 0
 
         directory = os.path.join('..', 'data')
         os.makedirs(directory, exist_ok=True)
@@ -48,13 +48,13 @@ class Player:
 
         # problem referencing index that hasnt been instantiated 
     
-    def hit(self, hand_num, deck, dealer):
-        if hand_num > 1: 
+    def hit(self, hand_num, deck: list[tuple[str, str]], dealer: Dealer):
+        if hand_num > 1:
             self.hands.append([]) 
         if hand_num >= 1 and hand_num <= len(self.hands): 
-            self.hands[hand_num - 1].append(dealer.deal_player(deck))
+            self.hands[hand_num - 1].append(dealer.deal_card(deck))
         else:
-            print("invalid index") 
+            print("invalid index")
 
     def get_hand(self):
         return self.hands
@@ -62,21 +62,23 @@ class Player:
     def new_hand(self):
         self.hands = []
     
-    def final_bet(self, amount, num_hands, dealer_hand):
+    def final_bet(self, amount, num_hands, dealer_hand: list[tuple[str, str]]):
         
         if len(self.hands) == 0 or len(dealer_hand) == 0: 
-            print("haven't dealt")
+            print("dealer hasn't dealt")
 
         outcome = "" 
+        # gets 
+        dealer_total = sum_hand(dealer_hand)
         for i in range(num_hands): 
-        
+            player_total = sum_hand(self.hands[i]) 
             if self.balance < amount:
                 amount = -1
 
-            if compare_hands(dealer_hand, self.hands[i][0]) == "win": 
+            if compare_hands(dealer_total, player_total) == "win": 
                 self.balance += amount*1.5 
                 outcome = "win"
-            elif compare_hands(dealer_hand, self.hands[i][0]) == "loss": 
+            elif compare_hands(dealer_total, player_total) == "loss":
                 self.balance -= amount
                 outcome = "loss"
             else:
@@ -85,17 +87,23 @@ class Player:
             if amount == -1: 
                 outcome = "N/A"
             sql_command(f'INSERT INTO {self.name} (balance, entry, WLP) VALUES (?, ?, ?)', self.db_path, (self.balance, amount, outcome))
-
-Plyer = Player("jim", 10000)
-print(Plyer.balance)
+        
 
 dlr = Dealer()
+crd = cards.new_deck2(1)
+print(dlr.get_hand(crd))
+print(len(crd))
+"""
+Plyer = Player("jim", 10000)
+print(Plyer.balance)
+dlr = Dealer()
 hnd = cards.new_deck(6)
-dlr.deal_self(hnd)
-dlr.deal_self(hnd)
+dlr.get_total(hnd)
+print(dlr.get_hand())
 print(Plyer.get_hand())
 Plyer.hit(1, hnd, dlr)
 print(Plyer.get_hand()) 
 Plyer.hit(1, hnd, dlr) 
-print(dlr.get_hand())
-Plyer.final_bet(213, 1, dlr.get_hand()) 
+
+Plyer.final_bet(213, 1, dlr.get_hand())
+"""
