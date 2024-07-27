@@ -41,6 +41,7 @@ class Dealer():
         total = 0
         aces = 0
         while total < 17:
+
             # if there exists an ace that changes from 11 -> 1, is less than 17, and total < 21
             card = self.deal_card(deck)
             self.hand.append(card)
@@ -56,12 +57,14 @@ class Dealer():
                 total += 11
             
             if aces > 0 and total > 21: 
-                # Ace is 1, above 16, less 22
                 if total - 10 <= 21:
+                     # Ace is 1, above 16, less 22
                     if total - 10 >= 17:
                         return self.hand, total - 10 
+                    # Ace is 1, less 17 
                     else: 
                         total -= 10
+                        aces -= 1
                 else: 
                     # case where Ace is 1, above 21 
                     return self.hand, total - 10
