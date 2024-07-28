@@ -5,7 +5,7 @@ from components.cards import new_deck
 from components.dealer import Dealer
 
 # helper method
-def splits(num_hand: int, player: Player): 
+def splits(num_hand: int, player: Player, deck: list[tuple[str,str]] , dlr: Dealer) -> None: 
     if player.get_hand_values(num_hand)[0] == player.get_hand_values(num_hand)[1]: 
         splitz = input("Do you wish to split your hand? (Y/N)")
         if splitz == "Y":
@@ -33,7 +33,7 @@ def real_simulation():
 
         print(f'Dealer\'s hand: [{dlr.upcard()}, (hidden, hidden)]')
         print(f'Player\'s hand 1: {Plyer.get_hand(1)}')
-        splits(1, Plyer)
+        splits(1, Plyer, deck, dlr)
 
         player_hit = input("Do you wish to hit? (Y/N): ")
         while player_hit != "Y" and player_hit != "N":
