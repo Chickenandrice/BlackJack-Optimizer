@@ -14,7 +14,7 @@ def sql_command(sql, db, val = None) -> None:
     val (tuple): a tuple that holds all values that are used in specific sql commands, such as INSERT
 
     """
-    
+
     connection = sqlite3.connect(db)
     cursor = connection.cursor()
 
@@ -30,7 +30,7 @@ class Player:
     This is a class that represents a BlackJack player. 
 
     Attributes: 
-    -----------
+
 
     """
     def __init__(self, name, balance):
@@ -45,8 +45,10 @@ class Player:
         os.makedirs(directory, exist_ok=True)
         self.db_path = os.path.join(directory, self.name + ".db") # name of player is the name of the database
 
-        sql_command(f'CREATE TABLE IF NOT EXISTS {self.name} (balance INTEGER, entry INTEGER, WLP TEXT)', self.db_path)
-        sql_command(f'INSERT INTO {self.name} (balance, entry, WLP) VALUES (?, ?, ?)', self.db_path, (self.balance, self.curr_bet, self.wlp)) 
+        sql_command(f'CREATE TABLE IF NOT EXISTS {self.name} (balance INTEGER, entry INTEGER, WLP TEXT, Dealer_Total TEXT, Player_Total TEXT)', 
+                    self.db_path)
+        sql_command(f'INSERT INTO {self.name} (balance, entry, WLP, Dealer_Total, Player_Total) VALUES (?, ?, ?, ?, ?)', 
+                    self.db_path, (self.balance, self.curr_bet, self.wlp, "None", "None"))
         sqlite3.connect(self.db_path).close()
 
     def add(self, amount: int) -> None:
@@ -64,35 +66,65 @@ class Player:
         """ This method returns the current balance of a player """
         return self.balance 
         
-    def split(self, hand_num: int) -> None: 
+    def split(self, hand_num: int, deck: list[tuple[str, str]], dealer: Dealer, card_value = None) -> bool: 
         """ 
         This method represents a split in BlackJack. 
 
         Parameters: 
 
-        hand_num (int): the number of the hand in a player's game that needs to be split. 
+        hand_num (int): the number of the hand in a player's game that needs to be split.
         """
+        if len(self.hands[hand_num-1]) == 2:
+            card_1 = self.hands[hand_num-1][0][0]
+            card_2 = self.hands[hand_num-1][1][0]
+            card_value = card_value or card_1
+            self.hands.append([])        
 
-        if len(self.hands) == 2 and self.hands[0][0] == self.hands[1][0]: 
-            self.hands.append(self.hands[0].remove(self.hands[hand_num][1]))
+            if len(self.hands[hand_num-1]) >= 2 and card_1 == card_2 == card_value: 
+                self.hands[hand_num].append(self.hands[hand_num-1].remove(self.hands[hand_num-1][1]))
+                print("a split was done") 
+                self.hit(hand_num, deck, dealer) 
+                self.hit(hand_num+1, deck, dealer) #TODO: FIX THIS METHOD !!!! 
+
+                if len(self.hands) > hand_num: 
+                    return self.split(hand_num, deck, dealer, card_value) or self.split(hand_num+1, deck, dealer, card_value)
+        return False 
         
-
     def stand():
         pass
 
         # problem referencing index that hasnt been instantiated 
-    
-    def hit(self, hand_num, deck: list[tuple[str, str]], dealer: Dealer) -> None:
+
+    def initial_deal(self, hand_num: int, deck: list[tuple[str, str]], dealer: Dealer) -> None:
+        i = 0
+        print("player cards:")
+        while i in range(2):
+            card = dealer.deal_card(deck)
+            self.hands[hand_num - 1].append(card)
+            print(card) 
+            i += 1
+
+    def hit(self, hand_num: int, deck: list[tuple[str, str]], dealer: Dealer) -> None:
         if hand_num > 1 and len(self.hands) != hand_num:
             self.hands.append([]) 
-        if hand_num >= 1: 
-            self.hands[hand_num - 1].append(dealer.deal_card(deck))
+        if hand_num >= 1:
+            card = dealer.deal_card(deck)
+            self.hands[hand_num - 1].append(card)
+            print(card) 
         else:
             print("invalid index")
 
-    def get_hand(self) -> list[tuple[str, str]]:
+    def get_hand(self, hand_num) -> list[tuple[str, str]]:
         """ returns a list of tuples for a Player object's current hand of cards in the format list[tuple[str, str]] """
-        return self.hands
+        if self.hands[hand_num] == [[]]: 
+            return "None"
+        return self.hands[hand_num]
+    
+    def get_hand_values(self, hand_num):
+        vals = []
+        for value in self.hands[hand_num - 1]: 
+            vals.append(value[0]) 
+        return str(vals)
     
     def new_hand(self) -> None:
         """ resets a Player object's current hand by setting self.hands to an empty list with an empty list """
@@ -149,12 +181,21 @@ class Player:
 
         str: this method returns loss, win, or push based on if player_hand total is smaller, the same, or larger than the dealer_total
         """ 
-        if dealer_total > player_total:
+        if player_total > 21: 
             return "loss"
-        elif dealer_total < player_total: 
-            return "win"
+        
+        elif player_total == 21: 
+            if dealer_total == player_total: 
+                return "push"
+            if dealer_total > 21: 
+                return "win"
         else: 
-            return "push"
+            if dealer_total > player_total: 
+                return "loss"
+            elif dealer_total == player_total:
+                return "push"
+            else: 
+                return "win"
     
     def bet(self, amount: int): 
         """
@@ -188,6 +229,7 @@ class Player:
             else:
                 outcome = "push"
                 self.curr_bet = 0
-
             self.prev_hands.append(outcome)
-            sql_command(f'INSERT INTO {self.name} (balance, entry, WLP) VALUES (?, ?, ?)', self.db_path, (self.balance, self.curr_bet, outcome))
+            sql_command(f'INSERT INTO {self.name} (balance, entry, WLP, Dealer_Total, Player_Total) VALUES (?, ?, ?, ?, ?)',
+                        self.db_path, (self.balance, self.curr_bet, self.prev_hands[len(self.prev_hands)-1], dealer_total, player_total))
+        
