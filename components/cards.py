@@ -75,7 +75,7 @@ deck = [
 
 
 """
-test cases 
+# test cases that were used in debugging 
 
 def new_deck2(num_decks, decks):
     play_cards = []
@@ -91,5 +91,6 @@ deck5 = [('4', 'Hearts'), ('Ace', 'Diamonds'), ('6', 'Hearts')]
 deck6 = [('Ace', 'Diamonds'), ('10', 'Diamonds'), ('9', 'Diamonds')]
 deck7 = [('10', 'Hearts'), ('3', 'Hearts'), ('3', 'Spades'), ('Ace', 'Hearts')]
 deck8 = [('Ace', 'Spades'), ('3', 'Clubs'), ('9', 'Spades'), ('Jack', 'Diamonds'), ('King', 'Spades'), ('8', 'Spades')]
+deck9 = [('Ace', 'Spades'), ('Ace', 'Spades'), ('Ace', 'Spades'), ('Ace', 'Spades'), ('Ace', 'Spades'), ('Ace', 'Spades'), ('Ace', 'Spades')]
 
 """
