@@ -1,5 +1,3 @@
-import strategies.default as df
-import strategies.strategies as st
 from components.player import Player
 from components.cards import new_deck
 from components.dealer import Dealer
