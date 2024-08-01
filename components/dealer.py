@@ -33,7 +33,7 @@ class Dealer():
         self.hand = []
         self.total = 0
 
-    def deal_card(self, deck: list[tuple[str, str]]): 
+    def deal_card(self, deck: list[tuple[str, str]]) -> tuple[str,str]: 
         """ 
         This method randomly deals cards from a deck. 
 
@@ -99,8 +99,14 @@ class Dealer():
         print(self.hand)
         return self.hand, self.total 
     
-    def dealer_hand_values(self) -> str:
-        """ This method returns the card values of all cards in a dealer's hand. """
+    def dealer_hand_values(self) -> list[str]:
+        """ 
+        This method returns the card values of all cards in a dealer's hand. 
+
+        Returns: 
+
+        list of string values of the dealer's hand values 
+        """
 
         vals = []
         for value in self.hand: 
@@ -108,11 +114,16 @@ class Dealer():
         return vals 
     
     def upcard(self) -> tuple[str,str]:
-        """ This method returns the upcard in a dealer's hand. """
+        """ 
+        This method returns the upcard in a dealer's hand.
+
+        Returns: 
+        a tuple[str,str] that represents the dealer's first upcard
+        """
 
         return self.hand[0]
     
-    def reset(self):
+    def reset(self) -> None:
         """ This method resets a dealer's hand and total by setting it to an empty list and 0 total. """
 
         self.hand = []
