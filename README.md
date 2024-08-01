@@ -20,7 +20,7 @@ This is a project that assists BlackJack players by allowing custom simulations 
 2. 6-8 deck games  
 3. insurance bets are not counted or recorded
 4. dealer hits under 17, and dealer stands 17 and above 
-5. Player does not explictedly chose the value of an Ace, the most advantage value will be selected for based on the current hand of a player
+5. Player does not explictedly chose the value of an Ace, the most advantageous value will be selected for based on the current hand of a player
 6. Doubling Down and Surrendering are not included in the simulation
 7. dealer doesn't hit on soft 17
 
@@ -43,4 +43,4 @@ Steps to testing your strategy
 
 ## Reflections: 
 
-There definitely could be more improvements with writing the dealer and player classes as there were a lot of overlaps that could have been avoided if the Dealer Class was made a subclass of the player. A Hand Class could have also been implemented to simplify some of the code, and there could have been better organization between the interactions between the Dealer and Player classes. State classes could have been used to deal with logic regarding hitting, standing, and splitting. In addition, state classes could make it easier to add on more logic later on in the project, such as doubling down or surrendering. 
+There definitely could be more improvements with writing the dealer and player classes as there were a lot of overlaps that could have been avoided if the Dealer Class was made a subclass of the player. A Hand Class could have also been implemented to simplify some of the code, and there could have been better organization between the interactions between the Dealer and Player classes. State classes could have been used to deal with logic regarding hitting, standing, and splitting. In addition, state classes could make it easier to add on more logic later on in the project, such as doubling down or surrendering. There could also be minor errors, that hasn't be address or found yet.
