@@ -31,7 +31,7 @@ def simulate_default_trials(number_trials: int, player_name: str, player_balance
         i += 1
     
     # this line plots the data 
-    plot_trial_balance(player_name) 
+    plot_trial_balance(player)
 
 
 def simulate_your_strategy(number_trials, player_name, player_balance, bet_amount):
@@ -60,13 +60,13 @@ def simulate_your_strategy(number_trials, player_name, player_balance, bet_amoun
         i += 1
     
     # this line plots the data 
-    plot_trial_balance(player_name) 
+    plot_trial_balance(player) 
 
 
 
 
 # sample simulation run
-simulate_default_trials(1000, "test", 10000, 100) 
+simulate_default_trials(20000, "example_4_larger_sample", 10000, 100)
 
 # RUNNING YOUR STRATEGY**
 #simulate_your_strategy(1000, "custom_strategy", 1000, 100)
