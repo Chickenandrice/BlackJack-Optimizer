@@ -41,6 +41,7 @@ def simulate_your_strategy(player: Player, dealer: Dealer, bet_amount: int):
 
 
     # TODO: Make your own strategy here, I would not recommend changing anything else in this method because they are essential for the code to compile 
+    # use methods from components/dealer.py and components/player.py, use default.py as an example and guide to write your strategy
 
     
 
