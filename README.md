@@ -16,21 +16,13 @@ This is a project that assists BlackJack players by allowing custom simulations 
 
 ## General Assumptions:   
 
-1. 3 to 2 payout odds 
-
+1. 3 to 2 payout
 2. 6-8 deck games  
-    
-3. player starting balance of $100,000
-
-4. insurance bets are not counted or recorded
-
-5. dealer hits under 17, and dealer stands 17 and above 
-
-6. Player does not explictedly chose the value of an Ace, the most advantage value will be selected for based on the current hand of a player
-
-7. Doubling Down and Surrendering are not included in the simulation
-
-8. dealer doesn't hit on soft 17
+3. insurance bets are not counted or recorded
+4. dealer hits under 17, and dealer stands 17 and above 
+5. Player does not explictedly chose the value of an Ace, the most advantage value will be selected for based on the current hand of a player
+6. Doubling Down and Surrendering are not included in the simulation
+7. dealer doesn't hit on soft 17
 
 ## Testing Strategies: 
 
@@ -45,7 +37,7 @@ Steps to testing your strategy
 1. adding ability to double down 
 2. adding ability to surrender
 3. implementing option for dealer hitting on soft 17
-4. more statistics 
+4. more statistics like linear regression
 5. adding a GUI
 6. Implementation of state variables and classes 
 
