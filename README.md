@@ -28,8 +28,7 @@ This is a project that assists BlackJack players by allowing custom simulations 
 
 Steps to testing your strategy
 1. write your strategy in the file strategies.py located in the strategies folder 
-2. execute your strategy in simulate_game.py by navigating to the line in the file
-'simulate_your_strategy(1000, "custom_strategy", 1000, 100)'
+2. navigating to the line in the file, 'simulate_your_strategy(1000, "custom_strategy", 1000, 100)'
 3. customize the parameters 
 4. go to command line and type python simulate_game.py to run the script 
 5. view strategy's database and plot in data and data/plot folder
