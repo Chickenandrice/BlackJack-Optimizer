@@ -7,12 +7,12 @@ This is a project that assists BlackJack players by allowing custom simulations 
 1.  a testing platform that allows users to modify and test their strategy
 
     - Users can backtest their strategy by using the simulate_game.py script to test their strategy and see it visualized on a plot, which gets created from a database.
-    - Users can see information about each hand that is played as well as overall statistics regarding a simulation. 
+    - Users can see information about each hand that is played as well as general statistics regarding a simulation. 
 
 2.  a real game simulation 
 
     - This is a stand alone part of the project that just tests certain player methods to ensure it works; it doubles as a fully functional blackjack game you can play in the command line.
-
+    - Open up a terminal and type in 'python real_game_simulation.py' to run the simulation. 
 
 ## General Assumptions:   
 
@@ -34,14 +34,21 @@ This is a project that assists BlackJack players by allowing custom simulations 
 
 ## Testing Strategies: 
 
-
+Steps to testing your strategy
+1. write your strategy in the file strategies.py located in the strategies folder 
+2. execute your strategy in simulate_game.py by navigating to the line 'simulate_your_strategy(1000, "custom_strategy", 1000, 100)'
+3. customize the parameters 
+4. go to command line and type python simulate_game.py to run the script 
+5. view strategy's database and plot in data and data/plot folder
 
 ## Potential Future Improvements: 
 1. adding ability to double down 
 2. adding ability to surrender
 3. implementing option for dealer hitting on soft 17
 4. more statistics 
-5. adding a gui 
+5. adding a GUI
+6. Implementation of state variables and classes 
 
+## Reflections: 
 
-
+There definitely could be more improvements with writing the dealer and player classes as there were a lot of overlaps that could have been avoided if the Dealer Class was made a subclass of the player. A Hand Class could have also been implemented to simplify some of the code, and there could have been better organization between the interactions between the Dealer and Player classes. State classes could have been used to deal with logic regarding hitting, standing, and splitting. In addition, state classes could make it easier to add on more logic later on in the project, such as doubling down or surrendering. 
